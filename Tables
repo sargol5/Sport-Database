@@ -1,0 +1,88 @@
+
+
+create TABLE Team(
+    team_id  serial primary key,
+    sport_id int Not Null,
+    admin_id int not Null,
+	name varchar(20) Not NULL,
+	no_of_member int default 3,
+	max_member int default 3,
+	needs_approval boolean default 'false',
+	admission_fee varchar(30) default 0,
+	trial_days int,
+	free_to_join boolean default 'false',
+	need_trainer boolean default 'false',
+	status varchar(20),
+	Rate float,
+	NOF integer default 0,
+	created_date TIMESTAMP default current_timestamp,
+	created_by int Not Null,
+	updated_date timestamp ,
+	updated_by integer,
+    FOREIGN KEY (sport_id) REFERENCES sports(sport_id)
+	
+);
+
+
+create TABLE team_feedback(
+Team_id  int Not Null ,
+Rate int NOT Null ,
+feedback varchar(255),
+created_date TIMESTAMP default current_timestamp,
+created_by int Not Null,
+updated_date date ,
+updated_by integer,
+primary key(created_by,team_id),
+
+FOREIGN KEY (Team_id) REFERENCES team (Team_id),
+FOREIGN KEY (created_by) REFERENCES users (user_id)
+
+);
+
+create table partner(
+suggested_partners varchar(100),
+user_id int not Null,
+sport_id int Not Null,
+suggested_teams varchar(100),
+team_suggestion_time varchar(100),
+partner_suggestion_time varchar(100),
+team_found_number int not Null,
+partner_found_number int not Null,
+created_date TIMESTAMP default current_timestamp,
+created_by int Not Null,
+updated_date timestamp ,
+updated_by integer,
+primary key(user_id,sport_id),
+FOREIGN KEY (user_ID,sport_ID) REFERENCES user_sport_setup (user_ID,sport_ID)
+)
+;
+
+create table user_sport_setup(
+user_id int not Null,
+sport_id int Not Null,
+skill_level_id int not Null,
+selected_partner int,
+has_partner boolean default 'false',
+need_trainer boolean default 'false',
+has_team boolean default 'false',
+need_team boolean default 'false',
+team_id varchar(20),
+freedays varchar(20),
+free_time varchar(30),
+need_place_of_activity boolean default 'false',
+partner_gender varchar(20),
+partner_age varchar(30),
+partner_hobbies varchar(30),
+partner_skill_level varchar(20),
+created_date TIMESTAMP default current_timestamp,
+created_by int Not Null,
+updated_date timestamp ,
+updated_by integer,
+primary key (user_id,sport_id),
+FOREIGN KEY (sport_ID) REFERENCES sports (sport_ID),
+FOREIGN KEY (user_ID) REFERENCES users (User_ID),
+FOREIGN KEY (skill_level_id ) REFERENCES skill_level  (skill_level_id ),
+FOREIGN KEY (selected_partner) REFERENCES users  (user_id )
+)
+;
+
